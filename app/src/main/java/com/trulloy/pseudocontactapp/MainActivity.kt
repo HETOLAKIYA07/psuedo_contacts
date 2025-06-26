@@ -7,7 +7,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var addContactFab: FloatingActionButton
     private lateinit var searchEditText: EditText
     private lateinit var emptyStateLayout: LinearLayout
+    private lateinit var openAboutUs: ImageView
 
     private val contactsList = mutableListOf<Contact>()
     private val filteredContactsList = mutableListOf<Contact>()
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         addContactFab = findViewById(R.id.addContactFab)
         searchEditText = findViewById(R.id.searchEditText)
         emptyStateLayout = findViewById(R.id.emptyStateLayout)
+        openAboutUs = findViewById(R.id.aboutUs)
 
         contactsAdapter = ContactsAdapter(filteredContactsList) { contact ->
             val intent = Intent(this, ContactDetailActivity::class.java).apply {
@@ -41,8 +45,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         contactsRecyclerView.layoutManager = LinearLayoutManager(this)
         contactsRecyclerView.adapter = contactsAdapter
+
+        openAboutUs.setOnClickListener{
+            startActivity(Intent(this,AboutUs::class.java))
+        }
 
         addContactFab.setOnClickListener {
             startActivity(Intent(this, AddContactActivity::class.java))
