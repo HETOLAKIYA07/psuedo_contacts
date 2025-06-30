@@ -19,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,9 +47,6 @@
 
         </LinearLayout>
 
-
-
-
         <TextView
             android:id="@+id/subtitleText"
             android:layout_width="wrap_content"
@@ -62,10 +58,7 @@
 
     </LinearLayout>
 
-
-
-    <!-- Search Bar -->
-    <!-- Search Bar with Group Filter -->
+    <!-- Enhanced Search Bar with Professional Spinner -->
     <androidx.cardview.widget.CardView
         android:id="@+id/searchCard"
         android:layout_width="match_parent"
@@ -84,17 +77,20 @@
             android:orientation="vertical"
             android:padding="12dp">
 
-            <!-- Row: Search Icon + EditText -->
+            <!-- Search Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
                     android:src="@drawable/ic_search"
                     android:tint="#757575"
                     tools:ignore="UseAppTint" />
@@ -109,22 +105,47 @@
                     android:hint="Search contacts..."
                     android:textColorHint="#9E9E9E"
                     android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:maxLines="1"
                     tools:ignore="TouchTargetSizeCheck" />
+
             </LinearLayout>
 
-            <!-- Group Filter Spinner -->
-            <Spinner
-                android:id="@+id/groupFilterSpinner"
+            <!-- Professional Group Filter Spinner -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:padding="4dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter:"
+                    android:textColor="#666666"
+                    android:textSize="14sp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp" />
+
+                <Spinner
+                    android:id="@+id/groupFilterSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_bg"
+                    android:dropDownWidth="match_parent"
+                    android:padding="8dp"
+                    android:popupBackground="#FFFFFF"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!--call log button-->
+    <!-- Enhanced Call Log Button -->
     <androidx.cardview.widget.CardView
         android:id="@+id/viewCallLogCard"
         android:layout_width="match_parent"
@@ -134,7 +155,10 @@
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@+id/searchCard"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,21 +167,52 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_call"
-                android:tint="@color/blue"
-                tools:ignore="UseAppTint" />
+            <LinearLayout
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="#E3F2FD"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_call"
+                    android:tint="#2196F3"
+                    tools:ignore="UseAppTint" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Call Logs"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent calls and history"
+                    android:textColor="#757575"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="View Call Logs"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="›"
+                android:textColor="#9E9E9E"
+                android:textSize="24sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -179,45 +234,119 @@
         app:layout_constraintTop_toBottomOf="@+id/viewCallLogCard"
         tools:listitem="@layout/item_contact" />
 
-    <!-- Empty State -->
+    <!-- Professional Empty State -->
     <LinearLayout
         android:id="@+id/emptyStateLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        android:gravity="center"
         android:visibility="gone"
+        android:padding="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/viewCallLogCard">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:alpha="0.3"
-            android:src="@drawable/ic_contacts_empty"
-            android:tint="#9E9E9E"
-            tools:ignore="UseAppTint" />
+        <!-- Professional Icon Container -->
+        <LinearLayout
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="#F3E5F5"
+            android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:text="No contacts yet"
-            android:textColor="#757575"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_contacts_empty"
+                android:tint="@color/blue"
+                android:alpha="0.8"
+                tools:ignore="UseAppTint" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
+            android:text="No contacts found"
+            android:textColor="#212121"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/emptyStateSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="24dp"
             android:text="Add your first contact to get started"
-            android:textColor="#9E9E9E"
-            android:textSize="14sp" />
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/addFirstContactBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="#2196F3"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ Add Contact"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Professional Tip Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:background="#E8F5E8"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💡 Quick Tip"
+                android:textColor="#2E7D32"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Use the + button to add contacts manually or import from your device contacts"
+                android:textColor="#2E7D32"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
