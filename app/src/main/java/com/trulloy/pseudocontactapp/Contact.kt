@@ -5,12 +5,13 @@ data class Contact(
     val firstName: String,
     val lastName: String,
     val phone1: String,
-    val phone2: String? = null,
-    val phone3: String? = null,
-    val phone4: String? = null,
-    val email: String = "",
-    val birthDate: String? = "",
-    val imageUri: String? = null
+    val phone2: String?,
+    val phone3: String?,
+    val phone4: String?,
+    val email: String,
+    val birthDate: String?,
+    val imageUri: String?,
+    val groupId: Int? = null
 ) : Serializable {
     fun getFullName(): String = "$firstName $lastName"
 

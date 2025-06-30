@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +22,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var searchEditText: EditText
     private lateinit var emptyStateLayout: LinearLayout
     private lateinit var openAboutUs: ImageView
+    private lateinit var groupSpinner: Spinner
 
     private val contactsList = mutableListOf<Contact>()
     private val filteredContactsList = mutableListOf<Contact>()
+    private var allGroups: List<Group> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         searchEditText = findViewById(R.id.searchEditText)
         emptyStateLayout = findViewById(R.id.emptyStateLayout)
         openAboutUs = findViewById(R.id.aboutUs)
+        groupSpinner = findViewById(R.id.groupFilterSpinner) // Spinner must exist in layout
 
         contactsAdapter = ContactsAdapter(filteredContactsList) { contact ->
             val intent = Intent(this, ContactDetailActivity::class.java).apply {
@@ -45,17 +46,28 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         contactsRecyclerView.layoutManager = LinearLayoutManager(this)
         contactsRecyclerView.adapter = contactsAdapter
 
-        openAboutUs.setOnClickListener{
-            startActivity(Intent(this,AboutUs::class.java))
+        openAboutUs.setOnClickListener {
+            startActivity(Intent(this, AboutUs::class.java))
         }
 
         addContactFab.setOnClickListener {
-            startActivity(Intent(this, AddContactActivity::class.java))
+            val options = arrayOf("Add Contact", "Manage Groups")
+
+            AlertDialog.Builder(this)
+                .setTitle("Choose Action")
+                .setItems(options) { _, which ->
+                    when (which) {
+                        0 -> startActivity(Intent(this, AddContactActivity::class.java))
+                        1 -> startActivity(Intent(this, ManageGroupsActivity::class.java))
+                    }
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
+
 
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -64,6 +76,17 @@ class MainActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        groupSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                filterContacts(searchEditText.text.toString())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
         findViewById<CardView>(R.id.viewCallLogCard).setOnClickListener {
             startActivity(Intent(this, CallLogActivity::class.java))
         }
@@ -71,7 +94,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        loadGroups()
         loadContactsFromDb()
+    }
+
+    private fun loadGroups() {
+        allGroups = GroupRepository.getAllGroups(this)
+        val groupNames = listOf("All Groups") + allGroups.map { it.name }
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, groupNames)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        groupSpinner.adapter = spinnerAdapter
     }
 
     private fun loadContactsFromDb() {
@@ -81,24 +113,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun filterContacts(query: String) {
+        val selectedGroupId = groupSpinner.selectedItemPosition
+            .takeIf { it > 0 }
+            ?.let { allGroups[it - 1].id }
+
         filteredContactsList.clear()
         filteredContactsList.addAll(
-            if (query.isEmpty()) {
-                contactsList
-            } else {
-                contactsList.filter {
-                    it.getFullName().contains(query, ignoreCase = true) ||
-                            it.phone1.contains(query, ignoreCase = true) ||
-                            it.phone2?.contains(query, ignoreCase = true) == true ||
-                            it.phone3?.contains(query, ignoreCase = true) == true ||
-                            it.phone4?.contains(query, ignoreCase = true) == true ||
-                            it.email.contains(query, ignoreCase = true)
-                }
+            contactsList.filter { contact ->
+                val matchesSearch = query.isEmpty() ||
+                        contact.getFullName().contains(query, ignoreCase = true) ||
+                        contact.phone1.contains(query, ignoreCase = true) ||
+                        contact.phone2?.contains(query, ignoreCase = true) == true ||
+                        contact.phone3?.contains(query, ignoreCase = true) == true ||
+                        contact.phone4?.contains(query, ignoreCase = true) == true ||
+                        contact.email.contains(query, ignoreCase = true)
+
+                val contactGroupId = contact.groupId?.toLong()
+                val matchesGroup = selectedGroupId == null || contactGroupId == selectedGroupId
+
+                matchesSearch && matchesGroup
             }
         )
+
         contactsAdapter.notifyDataSetChanged()
         updateEmptyState()
     }
+
 
 
     private fun updateEmptyState() {

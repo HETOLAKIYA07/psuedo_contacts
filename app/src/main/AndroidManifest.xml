@@ -22,6 +22,9 @@
         android:theme="@style/Theme.PseudoContactApp"
         tools:targetApi="31">
         <activity
+            android:name=".ManageGroupsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutUs"
             android:exported="false" />
         <activity
@@ -52,7 +55,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddContactActivity"
             android:exported="false"
