@@ -1,6 +1,7 @@
 package com.trulloy.pseudocontactapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -58,9 +59,11 @@ class ManageGroupsActivity : AppCompatActivity() {
     }
 
     private fun refreshList() {
+        Log.d("ManageGroupsActivity", "Refreshing group list...")
         groupList.clear()
         groupList.addAll(GroupRepository.getAllGroups(this))
         adapter.notifyDataSetChanged()
+        Log.d("ManageGroupsActivity", "Group count: ${groupList.size}")
     }
 
     fun confirmDeleteGroup(group: Group) {
