@@ -23,10 +23,12 @@
         tools:targetApi="31">
         <activity
             android:name=".ManageGroupsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".AboutUs"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"

@@ -18,9 +18,10 @@ class AboutUs : AppCompatActivity() {
         btncontact = findViewById(R.id.btn_contact)
         btnwebsite = findViewById(R.id.btn_website)
 
+
         // Open dial pad with phone number
         btncontact.setOnClickListener {
-            val phoneNumber = "9875261060"
+            val phoneNumber = getString(R.string.contact_phone)
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:$phoneNumber")
             startActivity(intent)
@@ -28,10 +29,12 @@ class AboutUs : AppCompatActivity() {
 
         // Open website in browser
         btnwebsite.setOnClickListener {
-            val websiteUrl = "https://www.trulloy.com"
+            val websiteUrl = getString(R.string.website_url)
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(websiteUrl)
             startActivity(intent)
         }
+
+
     }
 }

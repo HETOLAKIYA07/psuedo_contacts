@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <LinearLayout
@@ -31,12 +31,23 @@
                     android:src="@drawable/company_logo"
                     android:contentDescription="Company Logo" />
 
+
+                <TextView
+                    android:id="@+id/aboutVerion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="version 1.0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="5dp"
                     android:text="About Trulloy"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -120,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Our Mission"
-                            android:textColor="#1976D2"
+                            android:textColor="@color/blue"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -147,7 +158,7 @@
                     <View
                         android:layout_width="4dp"
                         android:layout_height="match_parent"
-                        android:background="#F44336" />
+                        android:background="@color/red" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -159,7 +170,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Our Vision"
-                            android:textColor="#F44336"
+                            android:textColor="@color/red"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -300,7 +311,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/blue"
                         android:text="Contact Us"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -312,7 +323,7 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/red"
                         android:text="Visit Website"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
